@@ -38,7 +38,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <sys/types.h>
-#if !defined(WINDOWS) && !defined(FREEBSD)
+#if !defined(WINDOWS) && !defined(FREEBSD) && !defined(OPENBSD)
 #include <sys/sysinfo.h>
 #endif
 #ifdef MACOS

@@ -48,6 +48,18 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
       FATAL_ERROR
         "Snapclient not yet supported for FreeBSD, use \"-DBUILD_CLIENT=OFF\"")
   endif()
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
+  set(OPENBSD TRUE)
+  if(BUILD_CLIENT)
+    message(
+      FATAL_ERROR
+        "Snapclient not yet supported for OpenBSD, use \"-DBUILD_CLIENT=OFF\"")
+  endif()
+  if(BUILD_WITH_ALSA)
+    message(
+      FATAL_ERROR
+        "ALSA not supported for OpenBSD, use \"-DBUILD_WITGH_ALSA=OFF\"")
+  endif()
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Android")
   set(ANDROID TRUE)
 endif()
@@ -259,6 +271,12 @@ if(NOT WIN32 AND NOT ANDROID)
 
     if(FREEBSD)
       add_compile_definitions(FREEBSD)
+      link_directories("/usr/local/lib")
+      list(APPEND INCLUDE_DIRS "/usr/local/include")
+    endif()
+
+    if(OPENBSD)
+      add_compile_definitions(OPENBSD)
       link_directories("/usr/local/lib")
       list(APPEND INCLUDE_DIRS "/usr/local/include")
     endif()
